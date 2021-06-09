@@ -1,0 +1,36 @@
+version: 0.2
+
+# env:
+#   variables:
+#     NODE_ENV: "$(git rev-parse --short HEAD)"
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 12
+    commands:
+      - npm i
+
+  pre_build:
+    commands:
+      - npm i
+      - npm run test
+
+  build:
+    commands:
+      - npm run build
+
+  post_build:
+    commands:
+      - echo Build completed on `date`
+
+artifacts:
+  files:
+    - dist/**/*
+    - node_modules/**/*
+    - package.json
+  # name: "api-dist-${env}"
+
+# cache:
+#   paths:
+#     - /root/.npm/**/*
